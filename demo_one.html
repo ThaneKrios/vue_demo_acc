@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>title</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- development version / version para desarolladores -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+
+        .headerRed{
+            color: red;
+        }
+        .headerGreen {
+            color: green;
+        }
+
+    </style>
+    <!--We'll be using https://jsonplaceholder.typicode.com/ to serve free API content-->
+</head>
+<body>
+    <header id="heading" >
+        <h1 v-bind:class="headingClass">{{ titleMessage }}</h1>
+        <p>if you open the command line and change the value of heading class, VUE will render the new class into the H1 element above</p>
+        <p>Try it:</p>
+        <code>heading.headingClass = "headerGreen"</code>
+    </header>
+
+    <div id="app">
+       <p>{{ message }}</p>
+    </div>
+
+    <div id="app-2">
+            <p v-bind:title="message"> <!-- -->
+                The directives: in this particular element we use v-bind directive to keep this element’s title attribute up-to-date with the message property on the Vue instance. If you open up your JavaScript console again and enter app2.message = 'some new message', you’ll once again see that the bound HTML - in this case the title attribute - has been updated. TRY IT!
+            </p>
+ </div>
+</body>
+
+<script>
+    // This script represents a data layer usually providede by an API
+    var heading = new Vue({ //Vue is a constructor and should be called with the `new` keyword as in the following examples
+        "el" : "#heading",
+        "data": {
+            "titleMessage" : "Welcome to VUE",
+            "headingClass" : 'headerRed'
+        }
+    })
+    
+    var app = new Vue({ 
+        el: '#app',
+        data: {
+            message: 'Hello Accenture!! At the core of Vue.js is a system that enables us to declaratively render data to the DOM using straightforward template syntax'
+
+        }
+    })
+
+    var app2 = new Vue({
+        el: '#app-2',
+        data: {
+            message: 'You loaded this page on ' + new Date().toLocaleString()
+        }
+    })
+</script>
+
+</html>
