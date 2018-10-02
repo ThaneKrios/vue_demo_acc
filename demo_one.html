@@ -16,21 +16,19 @@
         }
 
     </style>
-    <!--We'll be using https://jsonplaceholder.typicode.com/ to serve free API content-->
+    <!--We'll be using https://github.com/typicode/json-server to serve our JSON content
+        just install it globally and run "json-server --watch db.json" in the dir you placed the DB
+    -->
 </head>
 <body>
     <header id="heading" >
-        <h1 v-bind:class="headingClass">{{ titleMessage }}</h1>
+        <h1 v-bind:class="headingClass" v-bind:id="headingId">{{ titleMessage }}</h1>
         <p>if you open the command line and change the value of heading class, VUE will render the new class into the H1 element above</p>
         <p>Try it:</p>
         <code>heading.headingClass = "headerGreen"</code>
     </header>
 
-    <div id="app">
-       <p>{{ message }}</p>
-    </div>
-
-    <div id="app-2">
+    <div id="body_content">
             <p v-bind:title="message"> <!-- -->
                 The directives: in this particular element we use v-bind directive to keep this element’s title attribute up-to-date with the message property on the Vue instance. If you open up your JavaScript console again and enter app2.message = 'some new message', you’ll once again see that the bound HTML - in this case the title attribute - has been updated. TRY IT!
             </p>
@@ -38,29 +36,26 @@
 </body>
 
 <script>
+
+    const Http = new XMLHttpRequest();
+const url='http://localhost:3000/bodyJSON';
+Http.open("GET", url);
+Http.send();
+Http.onreadystatechange=(e)=>{
+console.log(Http.responseText)
+}
     // This script represents a data layer usually providede by an API
-    var heading = new Vue({ //Vue is a constructor and should be called with the `new` keyword as in the following examples
+    let heading = new Vue({ //Vue is a constructor and should be called with the `new` keyword as in the following examples
         "el" : "#heading",
         "data": {
             "titleMessage" : "Welcome to VUE",
-            "headingClass" : 'headerRed'
-        }
-    })
-    
-    var app = new Vue({ 
-        el: '#app',
-        data: {
-            message: 'Hello Accenture!! At the core of Vue.js is a system that enables us to declaratively render data to the DOM using straightforward template syntax'
-
+            "headingClass" : 'headerRed',
+            "headingId" : "headerMain"// as you can see the VUE constructor takes in Json and pseudo json objects
         }
     })
 
-    var app2 = new Vue({
-        el: '#app-2',
-        data: {
-            message: 'You loaded this page on ' + new Date().toLocaleString()
-        }
-    })
+
+let body_content = new Vue(bodyJSON)
 </script>
 
 </html>
